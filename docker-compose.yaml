@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  django:
+    image: api-server-django:0.2
+    stdin_open: true
+    tty: true
+    ports:
+      - "8000:8000"
+    networks:
+      api-server:
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  postgres:
+    image: api-server-postgres:0.1
+    stdin_open: true
+    tty: true
+    networks:
+      - api-server
+    restart: always
+    
+  nginx:
+    image: api-server-nginx:0.1
+    stdin_open: true
+    tty: true
+    networks:
+      - api-server
+    ports:
+      - "80:80"
+
+networks:
+  api-server:
+    external: true

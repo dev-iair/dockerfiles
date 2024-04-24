@@ -1,0 +1,5 @@
+FROM apache/kafka:latest 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV PATH /usr/local/bin:$PATH
+ENV LANG C.UTF-8
+ENV TZ Asia/Seoul
